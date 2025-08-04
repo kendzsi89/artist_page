@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@keyframes zoomout {
+  from {
+    scale: 1.2;
+  }
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
 :root {
    --playfair: "Playfair Display", serif;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
