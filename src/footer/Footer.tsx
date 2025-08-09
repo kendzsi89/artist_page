@@ -5,7 +5,7 @@ export default function Footer() {
 
       <img
         className="absolute inset-0 w-full h-full object-cover"
-        src="../src/assets/images/footer.jpeg"
+        src="/images/footer.jpeg"
         alt="portrait of Kendzsi"
       />
       {/* Gradient overlay */}

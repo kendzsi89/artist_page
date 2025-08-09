@@ -7,7 +7,7 @@ export default function Hero() {
 
       <img
         className="absolute inset-0 w-full h-full object-cover animate-[zoomout_2s_ease]"
-        src="../src/assets/images/hero.jpg"
+        src="/images/hero.jpg"
         alt="portrait of Kendzsi"
       />
       {/* Gradient overlay */}
