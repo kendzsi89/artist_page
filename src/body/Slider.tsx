@@ -37,27 +37,19 @@ export default function Slider() {
   const slideWidth = useRef(0);
   const gapWidth = useRef(0);
 
+  const updateSizes = () => {
+    if (!firstSlideRef.current || !trackRef.current) return;
+    slideWidth.current = firstSlideRef.current.offsetWidth;
+    const style = getComputedStyle(trackRef.current);
+    const gapStr =
+      style.getPropertyValue("column-gap") ||
+      style.getPropertyValue("gap") ||
+      "0px";
+    gapWidth.current = parseFloat(gapStr) || 0;
+    setCenterOffset((window.innerWidth - slideWidth.current) / 2);
+  };
   // Measure slide width + gap and calculate center offset (runs before paint)
   useLayoutEffect(() => {
-    const updateSizes = () => {
-      if (!firstSlideRef.current || !trackRef.current) return;
-
-      // slide width in px
-      slideWidth.current = firstSlideRef.current.offsetWidth;
-
-      // read computed gap (column-gap/common 'gap'); computed value returns px
-      const style = getComputedStyle(trackRef.current);
-      // prefer column-gap then gap — older browsers may differ
-      const gapStr =
-        style.getPropertyValue("column-gap") ||
-        style.getPropertyValue("gap") ||
-        "0px";
-      gapWidth.current = parseFloat(gapStr) || 0;
-
-      // center offset so a slide sits in the middle of the viewport
-      setCenterOffset((window.innerWidth - slideWidth.current) / 2);
-    };
-
     updateSizes();
     window.addEventListener("resize", updateSizes);
     return () => window.removeEventListener("resize", updateSizes);
@@ -159,8 +151,9 @@ export default function Slider() {
               <img
                 src={src}
                 alt={`Slide ${i + 1}`}
-                className="w-full lg:h-120 object-cover cursor-pointer select-none"
+                className="w-full h-120 object-cover cursor-pointer select-none"
                 draggable={false}
+                onLoad={updateSizes}
               />
 
               {/* Caption overlay */}
