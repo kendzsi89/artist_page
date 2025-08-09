@@ -2,7 +2,7 @@ import Icons from "./Icons";
 
 export default function Hero() {
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div className="flex relative w-screen h-screen overflow-hidden">
       {/* Background image */}
 
       <img
@@ -14,11 +14,22 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-tr from-black via-black to-transparent opacity-50 z-10" />
 
       {/* Content Layer */}
-      <div className="relative z-20 flex flex-col items-center justify-center h-full text-white">
+      <div className="relative z-20 flex flex-row items-end justify-between h-full w-full text-white">
         <Icons />
-        <h1 className="font-(family-name:--playfair) absolute bottom-30 left-30 text-[#0a0505] text-5xl md:text-7xl lg:text-8xl text-center animate-[appear_2s_ease_2s]">
+        <h1 className="font-(family-name:--playfair) relative bottom-50 left-[10%] text-[#0a0505] text-5xl md:text-7xl lg:text-10xl text-center animate-[appear_2s_ease]">
           Kendzsi <br /> Tanaka
         </h1>
+        <p className="font-(family-name:--playfair) relative bottom-2 right-3 text-[#0a0505] text-xs">
+          awesome photo by{" "}
+          <a
+            className="text-[#0a0505]!"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.schlichtkrull.com"
+          >
+            <u>Agnete Schlichtkrull</u>
+          </a>
+        </p>
       </div>
     </div>
   );

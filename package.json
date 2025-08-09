@@ -19,6 +19,8 @@
     "git": "^0.1.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-player": "^3.3.1",
+    "react-spotify-embed": "^2.0.4",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
