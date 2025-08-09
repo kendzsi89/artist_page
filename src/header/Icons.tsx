@@ -3,7 +3,7 @@ import Icon from "./Icon";
 export default function Icons() {
   return (
     <>
-      <div className="flex flex-direction-row gap-5 absolute top-3 right-10 animate-[appear_1.5s_ease]">
+      <div className="flex flex-direction-row gap-5 absolute top-3 right-5 lg:right-10 animate-[appear_1.5s_ease]">
         <Icon
           aStyles="hover:scale-110 transition-transform duration-300"
           svgStyles="w-5"

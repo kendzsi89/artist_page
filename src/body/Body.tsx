@@ -5,7 +5,7 @@ import BodyIcons from "./BodyIcons";
 
 export default function Body() {
   return (
-    <div className="bg-white">
+    <div className="bg-white flex flex-col items-center justify-center w-full min-h-screen overflow-x-hidden">
       <Section
         colReverse={true}
         video="https://youtu.be/CFD0RGI-iBo?si=Mofct1BKc04QS1M7"

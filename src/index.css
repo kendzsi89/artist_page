@@ -22,6 +22,7 @@
 }
 
 :root {
+  
    --playfair: "Playfair Display", serif;
    --lato: "Lato", sans-serif;
    --highlight: #db2b2b;
@@ -44,13 +45,18 @@ p {
   font-family: var(--lato);
   font-weight: 400;
 }
+html 
+{
 
+  overflow-x: hidden;
+}
 body {
+  display:flex;
+  justify-content: center;
+  overflow-x: hidden;
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 
@@ -61,17 +67,4 @@ button {
 }
 button:hover {
   background-color: var(--highlight);
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

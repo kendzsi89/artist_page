@@ -20,7 +20,7 @@ export default function Section({
 }) {
   return (
     <div
-      className={`flex flex-col md:flex-col lg:flex-row pt-10 lg:pt-30 items-center justify-center w-4/5 mx-auto gap-10 lg:gap-20 ${
+      className={`flex flex-col md:flex-col lg:flex-row pt-10 lg:pt-30 items-center justify-center w-4/5 lg:w-full gap-10 lg:gap-20 ${
         rowReverse ? "lg:flex-row-reverse" : ""
       }
       ${colReverse ? "sm:flex-col-reverse" : ""}`}
