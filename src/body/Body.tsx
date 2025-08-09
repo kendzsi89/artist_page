@@ -14,6 +14,7 @@ export default function Body() {
             keystrokes."
       />
       <Section
+        additionalStyles="lg:w-3/5 md:w-full lg:max-w-180"
         paragraph={
           <>
             Born in Hungary and partly raised in the States, I am half Japanese.
@@ -38,12 +39,13 @@ export default function Body() {
       />
       <Slider />
       <Section
+        additionalStyles="lg:w-3/5 md:w-full lg:max-w-150"
         video="https://youtu.be/nEvbK84KEUI"
         paragraph={
           <>
             Music for me is the purest form of <strong>communication.</strong> I
-            aim to tell my audiences a <strong>story,</strong>showing the beauty
-            and ups and downs written into the music through my{" "}
+            aim to tell my audiences a <strong>story,</strong> showing the
+            beauty and ups and downs written into the music through my{" "}
             <strong>perspective.</strong> Often it is only my experiences and my
             being that I draw the tools from to shape my{" "}
             <strong>interpretation.</strong> This is why as an{" "}
@@ -57,7 +59,7 @@ export default function Body() {
       />
 
       <Section
-        additionalStyles="lg:w-3/5 max-w-150"
+        additionalStyles="lg:w-3/5 md:w-full lg:max-w-150"
         firstLetter={false}
         paragraph={
           <>
@@ -72,7 +74,7 @@ export default function Body() {
         rowReverse={true}
         video="https://youtu.be/wGovALom5O0"
         firstLetter={false}
-        additionalStyles="max-w-150"
+        additionalStyles="lg:w-3/5 md:w-full lg:max-w-150"
         paragraph={
           <>
             Meanwhile, in my free time I <strong>teach</strong> a class of a{" "}
@@ -90,7 +92,7 @@ export default function Body() {
         }
       />
       <Section
-        additionalStyles="lg:w-3/5 max-w-150"
+        additionalStyles="lg:w-3/5 md:w-full lg:max-w-150"
         firstLetter={false}
         paragraph={
           <>
