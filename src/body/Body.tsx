@@ -7,6 +7,7 @@ export default function Body() {
   return (
     <div className="bg-white">
       <Section
+        colReverse={true}
         video="https://youtu.be/CFD0RGI-iBo?si=Mofct1BKc04QS1M7"
         quote="… Kendzsi played Rhapsody in Blue with fantastic confidence, […]
             with huge, energetic fortes, and oftentimes with gentle, tender
@@ -33,7 +34,7 @@ export default function Body() {
       <Section
         rowReverse={true}
         video="https://youtu.be/Rk6ekMRKa_Q?si=bzR2UdWZflfS8VOR"
-        quote="The warmth and melancholy of this soulful piece is beautifully captured in this live recording by pianist Kendzsi Tanaka."
+        quote="The warmth and melancholy of this soulful piece is beautifully captured in this live recording by pianist Kendzsi Tanaka..."
       />
       <Slider />
       <Section
@@ -56,7 +57,7 @@ export default function Body() {
       />
 
       <Section
-        additionalStyles="w-3/5"
+        additionalStyles="lg:w-3/5 max-w-150"
         firstLetter={false}
         paragraph={
           <>
@@ -71,6 +72,7 @@ export default function Body() {
         rowReverse={true}
         video="https://youtu.be/wGovALom5O0"
         firstLetter={false}
+        additionalStyles="max-w-150"
         paragraph={
           <>
             Meanwhile, in my free time I <strong>teach</strong> a class of a{" "}
@@ -88,7 +90,7 @@ export default function Body() {
         }
       />
       <Section
-        additionalStyles="w-3/5"
+        additionalStyles="lg:w-3/5 max-w-150"
         firstLetter={false}
         paragraph={
           <>

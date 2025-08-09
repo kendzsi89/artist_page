@@ -152,21 +152,29 @@ export default function Slider() {
             <div
               key={i}
               ref={i === 0 ? firstSlideRef : null}
-              className="flex-shrink-0 w-3/5 relative"
+              className="flex-shrink-0 w-11/12 lg:w-3/5 relative"
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <img
                 src={src}
                 alt={`Slide ${i + 1}`}
-                className="w-full h-120 object-cover cursor-pointer select-none"
+                className="w-full lg:h-120 object-cover cursor-pointer select-none"
                 draggable={false}
               />
 
               {/* Caption overlay */}
               {hoveredIndex === i && (
-                <div className="absolute inset-0 flex pr-1 items-end justify-end bg-black/30 text-white text-l font-semibold">
-                  <p className="right-3">{captions[i]}</p>
+                <div
+                  className={`
+                  absolute inset-0 flex items-end p-3 text-white font-semibold bg-black/30
+                  ${i === hoveredIndex ? "lg:flex" : "lg:hidden"}
+                  lg:justify-end
+                  justify-center text-center
+                  text-sm md:text-base
+                `}
+                >
+                  <p className="max-w-[90%]">{captions[i]}</p>
                 </div>
               )}
             </div>
@@ -174,7 +182,8 @@ export default function Slider() {
         </div>
 
         {/* Dots */}
-        <div className="flex justify-center mt-4 gap-2">
+        {/* Dots */}
+        <div className="flex justify-center gap-2 mt-4 mb-16 md:mb-12 lg:mb-10">
           {images.map((_, i) => (
             <button
               key={i}

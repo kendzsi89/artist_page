@@ -17,14 +17,14 @@ export default function Footer() {
           Contact
         </h2>
         <div className="relative z-20 flex flex-col items-start w-full mt-30">
-          <h3 className="font-(family-name:--playfair) text-[#0a0505] text-xl md:text-xl lg:text-3xl">
+          <h3 className="font-(family-name:--playfair) text-[#0a0505] text-xl md:text-2xl lg:text-3xl">
             akendzsi (@) gmail.com
           </h3>
-          <h3 className="font-(family-name:--playfair) text-[#0a0505] text-xl md:text-xl lg:text-3xl">
+          <h3 className="font-(family-name:--playfair) text-[#0a0505] text-xl md:text-2xl lg:text-3xl">
             +455o394351
           </h3>
         </div>
-        <div className="relative z-20 flex flex-col items-start w-1/3 mt-30">
+        <div className="relative z-20 flex flex-col items-start w-1/3 mt-30 max-w-100">
           <h3 className="font-(family-name:--playfair) text-[#0a0505] leading-[1.9em] text-xl md:text-xl lg:text-2xl">
             Let's have a chat! I am always open for new projects and
             collaborations.
