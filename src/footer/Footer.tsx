@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="absolute inset-0 bg-gradient-to-br from-black via-black to-transparent opacity-40 z-10" />
 
       {/* Content Layer */}
-      <div className="relative left-[10%] top-40 z-20 flex flex-col items-start h-full w-full">
+      <div className="relative px-[10%] top-40 z-20 flex flex-col items-start h-full w-full">
         <h2 className="font-(family-name:--playfair) text-white text-5xl md:text-7xl lg:text-10xl ">
           Contact
         </h2>
