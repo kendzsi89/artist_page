@@ -160,11 +160,13 @@ export default function Slider() {
               {hoveredIndex === i && (
                 <div
                   className={`
-                  absolute inset-0 flex items-end p-3 text-white font-semibold bg-black/30
+                  absolute bottom-0 flex items-end w-full content-end p-3 text-white font-semibold bg-black/60
                   ${i === hoveredIndex ? "lg:flex" : "lg:hidden"}
                   lg:justify-end
                   justify-center text-center
                   text-sm md:text-base
+                  max-h-10
+
                 `}
                 >
                   <p className="max-w-[90%]">{captions[i]}</p>
