@@ -77,7 +77,7 @@ export default function Body() {
         additionalStyles="lg:w-3/5 md:w-full lg:max-w-150"
         paragraph={
           <>
-            Meanwhile, in my free time I <strong>teach</strong> a class of a{" "}
+            Meanwhile, I <strong>teach</strong> a class of a{" "}
             <strong>dozen talented pianists.</strong> They are the future
             generation of music-carriers, so it is of great importance to me to
             show all the different aspects of playing, listening, and
