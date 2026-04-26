@@ -63,8 +63,8 @@ export default function Body() {
         firstLetter={false}
         paragraph={
           <>
-            We recently released an album with <strong>Aaron Hudson's </strong>{" "}
-            Double Bass Sonata, which I recorded together with Astor Cortabarria
+            Give a listen to our album with <strong>Aaron Hudson's </strong>{" "}
+            Double Bass Sonata, which we recorded together with Astor Cortabarria
             in 2022 and 2023:
           </>
         }
