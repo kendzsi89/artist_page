@@ -1,0 +1,82 @@
+.bg-fx {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+
+  --mx: 0.2;
+  --my: 0.2;
+}
+
+/* --- GRAIN LAYER --- */
+.grain {
+  position: absolute;
+  inset: -300%;
+
+  background-image: url("/grain.png"); /* or CSS noise */
+  opacity: 0.08;
+
+  animation: grainMove 6s steps(10) infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+@keyframes grainMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-10%, 10%); }
+}
+
+.clusters {
+  position: absolute;
+  inset: 0;
+  filter: blur(80px);
+  opacity: 0.6;
+
+  background:
+    radial-gradient(circle at calc(var(--mx) * 100%) calc(var(--my) * 100%),
+      rgba(238, 238, 255, 0.2),
+      transparent 30%),
+
+    radial-gradient(circle at 30% 70%,
+      rgba(255, 228, 244, 0.1),
+      transparent 40%),
+
+    radial-gradient(circle at 80% 20%,
+      rgba(205, 255, 235, 0.3),
+      transparent 50%);
+
+  animation: floatClusters 12s ease-in-out infinite alternate;
+}
+
+@keyframes floatClusters {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.1) translate(-2%, 2%);
+  }
+}
+
+.clusters {
+  transform:
+    translate(
+      calc((var(--mx) - 0.5) * 40px),
+      calc((var(--my) - 0.5) * 40px)
+    );
+}
+.bg-fx {
+  --speed: 2s;
+  --grain: 0.08;
+  --blur: 20px;
+  --clusterScale: 0.1;
+}
+.grain {
+  opacity: var(--grain);
+  animation-duration: var(--speed);
+}
+
+.clusters {
+  filter: blur(var(--blur));
+  transform: scale(var(--clusterScale));
+}
+

@@ -1,122 +1,81 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useEffect, useRef, useState } from "react";
+import Title from "./assets/components/Title";
+import { AboutOpened} from "./assets/components/About";
+import Menu from "./assets/components/Menu";
+import Grid from "./assets/components/Grid";
+import WindowOverlay from "./assets/components/WindowOverlay";
+import Footer from "./assets/components/Footer";
+import { data, type PortfolioItem } from "./assets/data/Data";
+import BackgroundFX from "./assets/components/BackgroundFX";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selected, setSelected] = useState<PortfolioItem | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
+const [activeId, setActiveId] = useState<number | null>(null);
+const [nearMouse, setNearMouse] = useState(false);
 
+  
+const buttonRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  const handleMove = (e: MouseEvent) => {
+    const el = buttonRef.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
+
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    setNearMouse(distance < 100);
+  };
+
+  window.addEventListener("mousemove", handleMove);
+  return () => window.removeEventListener("mousemove", handleMove);
+}, []);
+
+  
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className={`
+     transition-all duration-700
+    ${activeId ? "bg-[radial-gradient(circle_at_center,rgba(0,0,0,1),transparent_90%)]" : ""}
+  `}>
+      
+      <div className={`transition-all duration-800 ${menuOpen ? 'blur-[2px] opacity-50 brightness-70 scale-95' : 'blur-0 opacity-100 brightness-100 scale-100'}`}>
+        <Title faded={menuOpen} aboutOpened={aboutOpen} setAboutOpen={setAboutOpen} />
+        <AboutOpened open={aboutOpen} />
+        
+      <Grid
+        items={data}
+        onSelect={setSelected}
+        compressed={menuOpen}
+        setActiveId={setActiveId}
+        activeId={activeId}
+      />
 
-      <div className="ticks"></div>
+      <WindowOverlay
+        item={selected}
+        onClose={() => setSelected(null)}
+      />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <Footer />
+      
+      </div>
+      
+<Menu onToggle={setMenuOpen} nearMouse={nearMouse} buttonRef={buttonRef}/>
+<BackgroundFX
+  aboutOpen={aboutOpen}
+/>
+      
+    </div>
+  );
 }
 
-export default App
+export default App;
