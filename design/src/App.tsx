@@ -48,9 +48,9 @@ useEffect(() => {
     ${activeId ? "bg-[radial-gradient(circle_at_center,rgba(0,0,0,1),transparent_90%)]" : ""}
   `}>
       
-      <div className={`transition-all duration-800 ${menuOpen ? 'blur-[2px] opacity-50 brightness-70 scale-95' : 'blur-0 opacity-100 brightness-100 scale-100'}`}>
-        <Title faded={menuOpen} aboutOpened={aboutOpen} setAboutOpen={setAboutOpen} />
-        <AboutOpened open={aboutOpen} />
+      <div className={`transition-all duration-800 `}>
+        <Title faded={menuOpen} aboutOpened={aboutOpen} setAboutOpen={setAboutOpen} menuOpen={menuOpen}/>
+        <AboutOpened open={aboutOpen} faded={menuOpen} />
         
       <Grid
         items={data}
@@ -58,6 +58,8 @@ useEffect(() => {
         compressed={menuOpen}
         setActiveId={setActiveId}
         activeId={activeId}
+        aboutOpen={aboutOpen}
+        menuOpen={menuOpen}
       />
 
       <WindowOverlay
@@ -72,6 +74,8 @@ useEffect(() => {
 <Menu onToggle={setMenuOpen} nearMouse={nearMouse} buttonRef={buttonRef}/>
 <BackgroundFX
   aboutOpen={aboutOpen}
+  menuOpen={menuOpen}
+  activeId={activeId}
 />
       
     </div>

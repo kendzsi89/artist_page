@@ -175,7 +175,7 @@ const WindowOverlay = ({ item, onClose }: Props) => {
     </div>
 
   {/* TEXT */}
-  <p className="text-(--muted)">
+  <p className="text-(--muted) mb-6">
     {item.description}
   </p>
 

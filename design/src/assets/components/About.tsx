@@ -3,19 +3,32 @@ import { aboutText, icons } from "../data/Data";
 export function About({ faded, open, toggle }: { faded: boolean, open: boolean, toggle: () => void;}) {
   
   return (
-    <div className={`text-right group ${faded ? '' : ''}`}>
+    <div className={`grid col-span-full mt-10 lg:mt-0 md:flex flex-1 text-right h-full justify-end ${faded ? '' : ''}`}>
       <button
         onClick={toggle}
-        className="flex items-center gap-4 text-lg group uppercase text-(--muted) hover:text-white transition cursor-pointer"
+        className="flex  items-center self-end justify-end text-lg group uppercase text-(--muted) hover:text-white transition cursor-pointer"
+        style={{ color: faded ? 'black' : '' }}
       ><span
-          className={`transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
-          group-hover:translate-x-1 group-hover:rotate-90 group-hover:fill-white
-          ${open ? "rotate-180" : "rotate-0"}`}
+          className={`pr-10 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] fill-(--muted) group-hover:fill-white
+           ${open ? "group-hover:-rotate-270" : "group-hover:-rotate-90"}
+          ${open ? "-rotate-180" : "rotate-0"}`}
+          style={{ fill: faded ? 'black' : '' }}
         >
           {icons.arrow}
         </span>
+            <div className="relative">
 
-        <span>{open ? "Close" : "About"}</span>
+        <span className={`relative inset-0 transition-all duration-500 ${open ? "opacity-0 -translate-y-2 rotate-45" : "opacity-100 translate-y-0 rotate-0"}`}>
+          About me
+        </span>
+         <span className={` absolute inset-0 transition-all duration-500 ${
+      open
+        ? "opacity-100 translate-y-0 rotate-0"
+        : "opacity-0 translate-y-2 -rotate-45"
+    }`}>
+    Close me
+    </span>
+    </div>
       </button>
     </div>
   );
@@ -23,17 +36,29 @@ export function About({ faded, open, toggle }: { faded: boolean, open: boolean, 
 
 
 
-export function AboutOpened({open}: {open: boolean;}) {
-   
-return (
-<div
-        className={`flex justify-end px-4 md:px-10 lg:px-20 transition-all duration-500 overflow-hidden  ${
-          open ? "max-h-70 mt-4 opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <p className="relative text-right justify-end text-(--text) max-w-200 font-light tracking-tight leading-normal">
-          {aboutText}
-        </p>
+export function AboutOpened({ open, faded }: { open: boolean; faded: boolean }) {
+  return (
+    <div
+      className={`flex flex-col md:flex-row justify-stretch px-4 md:px-10 lg:px-20 transition-all duration-500 overflow-hidden gap-5 md:gap-30 ${
+        open ? "max-h-100 mt-12 opacity-100" : "max-h-0 opacity-0"
+      }`}
+    >
+      {/* IMAGE CONTAINER */}
+      <div className="relative flex-1 md:max-w-80 rounded-xl">
+        <img
+          src="/images/profile/kendzsi-profile.jpeg"
+          alt="Profile photo of Kendzsi Tanaka"
+          className="hidden md:block w-full h-full object-cover object-center md:object-bottom"
+        />
       </div>
-      )
-    }
+
+      {/* TEXT */}
+      <p
+        className="relative flex-2 text-right text-(--text) font-light tracking-normal leading-normal"
+        style={{ color: faded ? "#444444" : "white" }}
+      >
+        {aboutText}
+      </p>
+    </div>
+  );
+}

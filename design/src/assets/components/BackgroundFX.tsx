@@ -2,8 +2,10 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useEffect } from "react";
 import * as THREE from "three";
 
-export default function BackgroundFX({ aboutOpen }: { aboutOpen: boolean }) {
+export default function BackgroundFX({ aboutOpen, menuOpen, activeId }: { aboutOpen: boolean; menuOpen: boolean; activeId: number | null }) {
   const mouse = useRef({ x: 0.2, y: 0.2 });
+  
+
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX / window.innerWidth;
@@ -18,9 +20,9 @@ export default function BackgroundFX({ aboutOpen }: { aboutOpen: boolean }) {
     <div className="fixed inset-0 -z-10">
       <Canvas
         gl={{ antialias: false }}
-        camera={{ position: [0, 0, 1] }}
+        camera={{ position: [0, 0, 5] }}
       >
-        <Scene mouse={mouse} aboutOpen={aboutOpen} />
+        <Scene mouse={mouse} aboutOpen={aboutOpen} menuOpen={menuOpen} activeId={activeId} />
       </Canvas>
     </div>
   );
@@ -28,29 +30,116 @@ export default function BackgroundFX({ aboutOpen }: { aboutOpen: boolean }) {
 
 function Scene({
   mouse,
-  aboutOpen
+  aboutOpen,
+  menuOpen,
+  activeId
 }: {
   mouse: React.MutableRefObject<{ x: number; y: number }>;
   aboutOpen: boolean;
+  menuOpen: boolean;
+  activeId: number | null;
 }) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 const smoothedMouse = useRef(new THREE.Vector2(0.2, 0.2));
 
+
+const smooth = useRef({
+  blur: 0.8,
+  intensity: 0.25,
+  pink: 3.8,
+  mint: 0.2,
+  grain: 0.6,
+  scale: 0.1,
+});
+
   useFrame((state) => {
   if (!materialRef.current) return;
 
-  materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
+  const mat = materialRef.current;
 
-  // stable smoothing buffer
+  mat.uniforms.uTime.value = state.clock.elapsedTime;
+
+  // --- mouse smoothing (already good)
   smoothedMouse.current.lerp(
     new THREE.Vector2(mouse.current.x, mouse.current.y),
-    0.05
+    0.02
   );
+  mat.uniforms.uMouse.value.copy(smoothedMouse.current);
+type Palette = {
+  pink: number;
+  mint: number;
+  base: number;
+};
 
-  materialRef.current.uniforms.uMouse.value.copy(smoothedMouse.current);
+const palettes: Record<number, Palette> = {
+  0: { pink: 3.8, mint: 0.2, base: 0.65 },
+  1: { pink: 2.5, mint: 0.8, base: 0.3 },
+  2: { pink: 4.2, mint: 0.1, base: 0.22 },
+  3: { pink: 1.5, mint: 1.2, base: 0.28 },
+  4: { pink: 3.0, mint: 0.5, base: 0.24 },
+  5: { pink: 2.0, mint: 1.0, base: 0.26 },
+};
+  // --- TARGET VALUES ---
+  const base = {
+  blur: 0.8,
+  intensity: 0.25,
+  pink: 1.8,
+  mint: 0.2,
+  grain: 21.6,
+  scale: 0.9,
+};
 
-  materialRef.current.uniforms.uBlur.value = aboutOpen ? 3 : 2.2;
-  materialRef.current.uniforms.uIntensity.value = aboutOpen ? 0.3 : 0.5;
+// --- ABOUT influence
+if (aboutOpen) {
+  base.blur *= 0.6;
+  base.intensity *= 1.2;
+  base.scale *= 0.5;
+  base.pink = 0.4;
+}
+
+// --- MENU influence (more calm / background)
+if (menuOpen) {
+  base.intensity *= 0.5;
+  base.grain *= 0.5;
+  base.blur *= 1.2;
+}
+
+// --- HOVER (active project)
+if (activeId !== null) {
+  const p = palettes[activeId % 6];
+
+  base.intensity += p.base;     // boost presence
+  base.pink = p.pink;           // override color identity
+  base.mint = p.mint;
+
+  base.scale *= 0.2;            // slightly bigger blobs
+  base.blur *= 0.9;             // tighter = more focus
+}
+
+// --- IDLE (no hover) subtle drift
+if (activeId === null && !aboutOpen) {
+  base.intensity *= 0.9;
+  base.grain *= 1.1;
+}
+
+const target = base;
+  // --- SMOOTHING (this is the magic)
+  const speed = 0.05; // lower = smoother
+
+  smooth.current.blur += (target.blur - smooth.current.blur) * speed;
+  smooth.current.intensity += (target.intensity - smooth.current.intensity) * speed;
+  smooth.current.pink += (target.pink - smooth.current.pink) * speed;
+  smooth.current.mint += (target.mint - smooth.current.mint) * speed;
+  smooth.current.grain += (target.grain - smooth.current.grain) * speed;
+  smooth.current.scale += (target.scale - smooth.current.scale) * speed;
+
+  // --- APPLY TO SHADER
+  mat.uniforms.uBlur.value = smooth.current.blur;
+  mat.uniforms.uIntensity.value = smooth.current.intensity;
+  mat.uniforms.uPinkStrength.value = smooth.current.pink;
+  mat.uniforms.uMintStrength.value = smooth.current.mint;
+  mat.uniforms.uGrainStrength.value = smooth.current.grain;
+  mat.uniforms.uScale.value = smooth.current.scale;
 });
 
   return (
@@ -61,8 +150,14 @@ const smoothedMouse = useRef(new THREE.Vector2(0.2, 0.2));
         uniforms={{
           uTime: { value: 0 },
           uMouse: { value: new THREE.Vector2(0.2, 0.2) },
-          uBlur: { value: 1.0 },
-          uIntensity: { value: 0.1 }
+          uBlur: { value: 4.0 },
+          uIntensity: { value: 0.01 },
+
+          // NEW
+          uPinkStrength: { value: 0.6 },
+          uMintStrength: { value: 0.4 },
+          uGrainStrength: { value: 0.04 },
+          uScale: { value: 0.1 },
         }}
         vertexShader={vertex}
         fragmentShader={fragment}
@@ -114,35 +209,57 @@ float blob(vec2 uv, vec2 pos, float size) {
   float d = distance(uv, pos);
   return smoothstep(size, size - uBlur * 0.2, d);
 }
+// --- metaball field ---
+float field(vec2 uv, vec2 pos, float strength) {
+  float d = distance(uv, pos);
+  return strength / (d * d + 0.001);
+}
 
 void main() {
   vec2 uv = vUv;
 
-  // --- mouse offset ---
-  vec2 m = uMouse;
-  uv += (m - 0.5) * 0.05;
+// mouse influence
+vec2 m = uMouse;
+uv += (m - 0.5) * 0.05;
 
-  // --- blobs (your gradients) ---
-  float b1 = blob(uv, m, 0.35);
-  float b2 = blob(uv, vec2(0.3, 0.7), 0.2);
-  float b3 = blob(uv, vec2(0.8, 0.2), 0.1);
+// scale → bigger blobs
+uv = (uv - 0.5) * 1.5 + 0.5;
 
-  vec3 col = vec3(0.0);
 
-  col += b1 * vec3(0.93, 0.93, 1.0);
-  col += b2 * vec3(1.0, 0.9, 0.95);
-  col += b3 * vec3(0.8, 1.0, 0.9);
 
-  // --- subtle movement ---
-  col *= 1.0 + sin(uTime * 0.3) * 0.05;
+float f = 0.0;
+f += field(uv, m, 0.25);
+f += field(uv, vec2(0.3, 0.7), 0.15);
+f += field(uv, vec2(0.8, 0.2), 0.12);
 
-  // --- grain ---
-  float g = noise(uv * 500.0 + uTime * 2.0);
-  col += (g - 0.5) * 0.08;
+// shape
+float blobs = smoothstep(0.6, 1.2, f * uBlur);
 
-  // --- intensity control ---
-  col *= uIntensity;
+// --- color blending ---
+vec3 base = vec3(0.93, 0.93, 0.2);
+vec3 pink = vec3(1.0, 0.9, 0.95);
+vec3 mint = vec3(0.8, 1.0, 0.9);
 
-  gl_FragColor = vec4(col, 1.0);
+vec3 col = mix(base, pink, smoothstep(0.7, 1.1, f));
+col = mix(col, mint, smoothstep(1.0, 1.4, f));
+
+col *= blobs;
+
+// --- subtle movement
+col *= 1.0 + sin(uTime * 0.3) * 0.05;
+
+// --- colored grain
+vec3 grain = vec3(
+  noise(uv * 800.0 + uTime * 2.0),
+  noise(uv * 800.0 + uTime * 2.0 + 10.0),
+  noise(uv * 800.0 + uTime * 2.0 + 20.0)
+);
+
+col += (grain - 0.5) * 0.04;
+
+// intensity
+col *= uIntensity;
+
+gl_FragColor = vec4(col, 1.0);
 }
 `;

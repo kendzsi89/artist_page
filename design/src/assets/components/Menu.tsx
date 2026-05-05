@@ -88,7 +88,7 @@ const handleCopy = async () => {
       <div
       ref={buttonRef}
         className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
-          (visible || nearMouse) ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+          (visible || nearMouse || open) ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         }`}
       >
         <button
@@ -130,7 +130,7 @@ const handleCopy = async () => {
         
         {/* Top Left */}
         <div
-          className={`absolute top-6 left-6 text-9xl text-amber-50 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] z-100
+          className={`absolute top-6 left-6 text-9xl text-(--mint) transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] z-100
           ${animateIn 
             ? "opacity-100 translate-x-0 translate-y-0 scale-100"
             : "opacity-0 -translate-x-40 -translate-y-40 scale-50"
@@ -139,7 +139,7 @@ const handleCopy = async () => {
 <button
     className="
       px-4 py-2
-      text-amber-50 text-9xl 
+       text-9xl 
 
        
        rounded-xl
@@ -158,7 +158,7 @@ const handleCopy = async () => {
 
         {/* Top Right */}
         <div
-          className={`absolute top-6 right-6 text-9xl text-amber-50 transition-all duration-700 delay-75 ease-[cubic-bezier(0.22,1,0.36,1)] 
+          className={`absolute top-6 right-6 text-9xl text-(--mint) transition-all duration-700 delay-75 ease-[cubic-bezier(0.22,1,0.36,1)] 
           ${animateIn
             ? "opacity-100 translate-x-0 translate-y-[150%] md:translate-y-0 scale-100 cursor-pointer"
             : "opacity-0 translate-x-40 -translate-y-40 scale-50"
@@ -167,7 +167,7 @@ const handleCopy = async () => {
           <button
     className="
       px-4 py-2
-      text-amber-50 text-9xl 
+      text-9xl 
 
        
        rounded-xl
@@ -187,7 +187,7 @@ const handleCopy = async () => {
 
         {/* Bottom Left */}
         <div
-          className={`absolute bottom-6 left-6 text-9xl text-amber-50 transition-all duration-700 delay-150 ease-[cubic-bezier(0.22,1,0.36,1)] 
+          className={`absolute bottom-6 left-6 text-9xl text-(--mint) transition-all duration-700 delay-150 ease-[cubic-bezier(0.22,1,0.36,1)] 
           ${animateIn
             ? "opacity-100 translate-x-0 translate-y-[-150%] md:translate-y-0 scale-100 cursor-pointer"
             : "opacity-0 -translate-x-40 translate-y-40 scale-50"
@@ -196,7 +196,7 @@ const handleCopy = async () => {
           <button
     className="
       px-4 py-2
-      text-amber-50 text-9xl 
+     text-9xl 
 
        
        rounded-xl
@@ -214,7 +214,7 @@ const handleCopy = async () => {
 
         {/* Bottom Right */}
         <div
-          className={`absolute bottom-6 right-6 text-9xl text-amber-50 transition-all duration-700 delay-200 ease-[cubic-bezier(0.22,1,0.36,1)] 
+          className={`absolute bottom-6 right-6 text-9xl transition-all duration-700 delay-200 ease-[cubic-bezier(0.22,1,0.36,1)] 
           ${animateIn
             ? "opacity-100 translate-x-0 translate-y-0 scale-100 cursor-pointer"
             : "opacity-0 translate-x-40 translate-y-40 scale-50"
@@ -223,7 +223,7 @@ const handleCopy = async () => {
           <button
     className="
       px-4 py-2
-      text-amber-50 text-9xl 
+    text-(--mint) text-9xl 
 
        
        rounded-xl

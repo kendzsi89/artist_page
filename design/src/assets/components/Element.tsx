@@ -6,9 +6,10 @@ interface Props {
   onClick: (item: PortfolioItem) => void;
   setActiveId: (id: number | null) => void;
   activeId: number | null;
+  menuOpen: boolean;
 }
 
-const Element = ({ item, onClick, setActiveId, activeId}: Props) => {
+const Element = ({ item, onClick, setActiveId, activeId, menuOpen }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [tx, setTx] = useState(0);
   const [ty, setTy] = useState(0);
@@ -88,6 +89,7 @@ const [hovered, setHovered] = useState(false);
         
         group relative cursor-pointer overflow-hidden rounded-xl
         transition-transform duration-300 will-change-transform w-full h-64
+        scale-100 ${activeId === item.id ? "scale-110" : ""}
       `}
     >
       
@@ -96,7 +98,7 @@ const [hovered, setHovered] = useState(false);
       <div
         className={`
           absolute inset-0
-         bg-white/60
+         bg-white/20
           transition-[opacity, transform] duration-[1200ms,700ms] ease-[cubic-bezier(0.22,1,0.36,1)]
           opacity-90
           group-hover:opacity-0
@@ -105,18 +107,21 @@ const [hovered, setHovered] = useState(false);
         `}
         style={{ 
           transformOrigin: `var(--x) var(--y)`,
-          transform: `translate(${-tx * 2}px, ${-ty * 2}px)`}}
+          transform: `translate(${-tx * 3}px, ${-ty * 3}px)`,
+          opacity: menuOpen ? 1 : 0.2}}
       />
 
       {/* DARK OVERLAY */}
-      <div className={`absolute inset-0 bg-black/20 group-hover:bg-black/40 transition`} />
+      <div className={`absolute inset-0 group-hover:bg-black/40 transition`} 
+      style={{background: menuOpen ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.2)"}}/>
       
 
       {/* TITLE */}
       <div className="absolute bottom-4 left-4 z-10">
-        <h3 className={`"text-lg font-medium group-hover:translate-y-full group-hover:opacity-0 transition duration-500
+        <h3 className={`"text-lg font-medium group-hover:translate-y-full group-hover:opacity-0 transition-(opacity,transform) duration-500
         ${activeId === item.id ? "" : "opacity-100"}
-        `}>{item.title}</h3>
+        `}
+        style={{color: menuOpen ? "black" : "white"}}>{item.title}</h3>
       </div>
 
       {/* UNDERLAY (revealed after peel) */}

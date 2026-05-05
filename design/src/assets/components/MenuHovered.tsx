@@ -46,7 +46,7 @@ export default function MenuHovered({ hovered, copied, copyStep }: { hovered: st
           Music deeply influences how I think about rhythm, flow, and structure in design.
         </p>
         
-                <p className="pt-15 relative right-90 bottom-0 text-sm text-(--muted)
+                <p className="pt-15 relative right-90 bottom-0 text-sm text-white
           opacity-0 animate-[fadeIn_0.6s_0.3s_forwards] text-left">
             Click to explore my musician page        </p>
 
