@@ -48,7 +48,9 @@ export function AboutOpened({ open, faded }: { open: boolean; faded: boolean }) 
         <img
           src="/images/profile/kendzsi-profile.jpeg"
           alt="Profile photo of Kendzsi Tanaka"
-          className="hidden md:block w-full h-full object-cover object-center md:object-bottom"
+          className={`hidden md:block w-full h-full object-cover object-center md:object-bottom transition duration-400 delay-800
+            ${open ? 'opacity-100 translate-x-0 blur-0' : 'opacity-0 translate-x-10 blur-sm'}`
+          }
         />
       </div>
 
