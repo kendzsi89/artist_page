@@ -13,7 +13,7 @@ interface Props {
 }
 
 
-const Grid = ({ items, onSelect, compressed, setActiveId, activeId, aboutOpen, menuOpen }: Props) => {
+const Grid = ({ items, onSelect, compressed, setActiveId, activeId, menuOpen }: Props) => {
 
   return (
     
