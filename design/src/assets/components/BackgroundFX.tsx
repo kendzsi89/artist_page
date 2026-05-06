@@ -72,9 +72,9 @@ type Palette = {
 };
 
 const palettes: Record<number, Palette> = {
-  0: { pink: 3.8, mint: 0.2, base: 0.65 },
-  1: { pink: 2.5, mint: 0.8, base: 0.3 },
-  2: { pink: 4.2, mint: 0.1, base: 0.22 },
+  0: { pink: 2.8, mint: 0.2, base: 0.65 },
+  1: { pink: 3.5, mint: 0.8, base: 0.3 },
+  2: { pink: 1.2, mint: 0.1, base: 0.22 },
   3: { pink: 1.5, mint: 1.2, base: 0.28 },
   4: { pink: 3.0, mint: 0.5, base: 0.24 },
   5: { pink: 2.0, mint: 1.0, base: 0.26 },
@@ -223,13 +223,13 @@ vec2 m = uMouse;
 uv += (m - 0.5) * 0.05;
 
 // scale → bigger blobs
-uv = (uv - 0.5) * 1.5 + 0.5;
+uv = (uv - 0.5) * 2.5 + 0.5;
 
 
 
 float f = 0.0;
 f += field(uv, m, 0.25);
-f += field(uv, vec2(0.3, 0.7), 0.15);
+f += field(uv, vec2(0.2, 0.9), 0.45);
 f += field(uv, vec2(0.8, 0.2), 0.12);
 
 // shape

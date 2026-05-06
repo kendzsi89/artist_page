@@ -60,8 +60,8 @@ const Menu = ({ onToggle, nearMouse, buttonRef }: Props) => {
 const handleCopy = async () => {
     const value =
       copyStep === "phone"
-        ? "+45 12 34 56 78"
-        : "hello@yourdomain.com";
+        ? "+45 50 39 43 51"
+        : "akendzsi@gmail.com";
 
     try {
       await navigator.clipboard.writeText(value);
@@ -130,7 +130,7 @@ const handleCopy = async () => {
         
         {/* Top Left */}
         <div
-          className={`absolute top-6 left-6 text-9xl text-(--mint) transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] z-100
+          className={`hidden absolute top-6 left-6 text-9xl text-(--mint) transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] z-100
           ${animateIn 
             ? "opacity-100 translate-x-0 translate-y-0 scale-100"
             : "opacity-0 -translate-x-40 -translate-y-40 scale-50"
