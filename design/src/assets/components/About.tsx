@@ -12,7 +12,7 @@ export function About({ faded, open, toggle }: { faded: boolean, open: boolean, 
           className={`pr-10 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] fill-(--muted) group-hover:fill-white
            ${open ? "group-hover:-rotate-270" : "group-hover:-rotate-90"}
           ${open ? "-rotate-180" : "rotate-0"}`}
-          style={{ fill: faded ? 'black' : '' }}
+          style={{ fill: faded ? 'black' : open ? 'white' : '' }}
         >
           {icons.arrow}
         </span>
@@ -21,11 +21,12 @@ export function About({ faded, open, toggle }: { faded: boolean, open: boolean, 
         <span className={`relative inset-0 transition-all duration-500 ${open ? "opacity-0 -translate-y-2 rotate-45" : "opacity-100 translate-y-0 rotate-0"}`}>
           About me
         </span>
-         <span className={` absolute inset-0 transition-all duration-500 ${
+         <span className={` absolute inset-0 transition-all duration-500  ${
       open
-        ? "opacity-100 translate-y-0 rotate-0"
+        ? "opacity-100 translate-y-0 rotate-0 text-white"
         : "opacity-0 translate-y-2 -rotate-45"
-    }`}>
+    }`}
+    style={{ color: faded ? 'black' : '' }}>
     Close me
     </span>
     </div>
@@ -44,20 +45,23 @@ export function AboutOpened({ open, faded }: { open: boolean; faded: boolean }) 
       }`}
     >
       {/* IMAGE CONTAINER */}
-      <div className="relative flex-1 md:max-w-80 rounded-xl">
-        <img
-          src="/images/profile/kendzsi-profile.jpeg"
-          alt="Profile photo of Kendzsi Tanaka"
-          className={`hidden md:block w-full h-full object-cover object-center md:object-bottom transition duration-400 delay-800
-            ${open ? 'opacity-100 translate-x-0 blur-0' : 'opacity-0 translate-x-10 blur-sm'}`
-          }
-        />
-      </div>
+      <div className={`relative flex-1 md:max-w-80 rounded-xl transition
+      ${faded ? 'blur-sm opacity-50 brightness-30 scale-90 translate-x-10' : 'blur-0 grayscale-0'}`}>
+  <img
+    src="/images/profile/kendzsi-profile.jpeg"
+    alt="Profile photo of Kendzsi Tanaka"
+    className={`
+      hidden md:block w-full h-full object-cover object-center md:object-bottom
+      transition-all duration-400 rounded-xl
+      ${open ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}
+    `}
+  />
+</div>
 
       {/* TEXT */}
       <p
-        className="relative flex-2 text-right text-(--text) font-light tracking-normal leading-normal"
-        style={{ color: faded ? "#444444" : "white" }}
+        className="relative flex-2 text-right text-(--text) font-light tracking-normal leading-normal transition-all duration-500"
+        style={{ color: faded ? "black" : "white", filter: faded ? "blur(2px) " : "none", transform: faded ? "scale(0.95) translateX(10px)" : "none" }}
       >
         {aboutText}
       </p>

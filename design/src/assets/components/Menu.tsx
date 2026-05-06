@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { icons } from "../data/Data";
 import { menu } from "../data/Data";
 import MenuHovered from "./MenuHovered";
