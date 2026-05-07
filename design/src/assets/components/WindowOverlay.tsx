@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import type { PortfolioItem } from "../data/Data";
-import ReactPlayer from "react-player";
 
 interface Props {
   item: PortfolioItem | null;
@@ -150,15 +149,13 @@ const WindowOverlay = ({ item, onClose }: Props) => {
 
       {/* VIDEO */}
       {item.media.type === "video" && (
-        <ReactPlayer
+        <video
           src={item.media.src}
-          playing
+          autoPlay
           muted
           loop
-          controls={false}
-          width="100%"
-          height="100%"
-          style={{ pointerEvents: "none" }}
+          playsInline
+          className="w-full h-full object-cover pointer-events-none"
         />
       )}
 

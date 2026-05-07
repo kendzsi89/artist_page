@@ -84,7 +84,7 @@
   "extensionsUsed": ["KHR_materials_unlit"],
   "images": [
     {
-      "uri": "textures/VR_Gallery_baseColor.png"
+      "uri": "textures/VR_Gallery_baseColor.jpeg"
     },
     {
       "uri": "textures/VR_Gallery_emissive.png"
