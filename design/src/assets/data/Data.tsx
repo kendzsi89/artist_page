@@ -110,7 +110,7 @@ export const data: PortfolioItem[] = [
     title: "Space Composer",
     thumbnail: "/images/placeholder.jpg",
     image: "/images/placeholder.jpg",
-    previews: ["/images/previews/internal/space-composer-preview.png"],
+    previews: ["/images/previews/internal/spacecomposer-preview.png"],
     description: "An interactive audio-visual experiment where sound evolves based on spatial relationships between celestial bodies.",
     url: "/projects/Space-composer/index.html",
     type: "internal",
