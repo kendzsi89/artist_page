@@ -10,11 +10,30 @@ let globalZ = 50;
 
 const WindowOverlay = ({ item, onClose }: Props) => {
   const [loading, setLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
   const [zIndex, setZIndex] = useState(globalZ++);
   const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [size, setSize] = useState({ w: 800, h: 500 });
+  const [size, setSize] = useState({
+  w: window.innerWidth < 768
+    ? window.innerWidth * 0.95
+    : 800,
+
+  h: window.innerWidth < 768
+    ? window.innerHeight * 0.85
+    : 500
+});
 
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+  const onResize = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  window.addEventListener("resize", onResize);
+  return () => window.removeEventListener("resize", onResize);
+}, []);
 
   useEffect(() => {
     if (!item) return;
@@ -89,13 +108,18 @@ const WindowOverlay = ({ item, onClose }: Props) => {
       {/* Window */}
       <div
         ref={ref}
-        onMouseDown={() => setZIndex(globalZ++)}
+        onMouseDown={!isMobile ? () => setZIndex(globalZ++) : undefined}
         style={{
           transform: `translate(${pos.x}px, ${pos.y}px)`,
-          width: size.w,
-          height: size.h,
-          zIndex
-        }}
+          width: isMobile
+            ? "95vw"
+            : Math.min(size.w, window.innerWidth - 40),
+
+          height: isMobile
+            ? "85vh"
+            : Math.min(size.h, window.innerHeight - 40),
+                    zIndex
+                  }}
         className="fixed
   top-1/2 left-1/2
   -translate-x-1/2 -translate-y-1/2
@@ -107,7 +131,7 @@ const WindowOverlay = ({ item, onClose }: Props) => {
       >
         {/* Header (drag handle) */}
         <div
-          onMouseDown={onMouseDown}
+          onMouseDown={!isMobile ? onMouseDown : undefined}
           className="flex justify-between items-center px-4 py-2 cursor-move border-b border-white/10"
         >
           <h2 className="text-sm">{item.title}</h2>
@@ -137,7 +161,15 @@ const WindowOverlay = ({ item, onClose }: Props) => {
   
   {/* MEDIA */}
   {item.media && (
-    <div className="flex-2 w-full aspect-video rounded-lg overflow-hidden bg-black">
+    <div className="
+            w-full
+            md:flex-2
+            aspect-video
+            max-h-[40vh]
+            rounded-lg
+            overflow-hidden
+            bg-black
+          ">
       
       {/* IMAGE */}
       {item.media.type === "image" && (
@@ -198,11 +230,13 @@ const WindowOverlay = ({ item, onClose }: Props) => {
 </div>
 
         {/* Resize handle */}
+        {!isMobile && (
         <div
           onMouseDown={onResize}
           className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize"
-        />
+        />)}
       </div>
+        
     </div>
   );
 };
