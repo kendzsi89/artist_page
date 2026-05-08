@@ -24,7 +24,7 @@ export function About({ faded, open, toggle }: { faded: boolean, open: boolean, 
          <span className={` absolute inset-0 transition-all duration-500  ${
       open
         ? "opacity-100 translate-y-0 rotate-0 text-white"
-        : "opacity-0 translate-y-2 -rotate-45"
+        : "opacity-0 translate-y-2 rotate-15"
     }`}
     style={{ color: faded ? 'black' : '' }}>
     Close me
@@ -56,6 +56,7 @@ export function AboutOpened({ open, faded }: { open: boolean; faded: boolean }) 
       ${open ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}
     `}
   />
+  <p className="absolute bottom-0 right-2 hidden md:block text-[10px] text-(--muted)">Photo credit: <a className="text-(--muted) hover:text-white transition" href="https://www.schlichtkrull.com/" target="_blank" rel="noopener noreferrer">Agnete Schlichtkrull</a></p>
 </div>
 
       {/* TEXT */}

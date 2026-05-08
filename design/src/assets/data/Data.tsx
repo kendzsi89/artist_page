@@ -131,5 +131,6 @@ export const data: PortfolioItem[] = [
 
 export const contactInfo = {
   phone: "+45 5O 34 43 51",
-  email: "akendzsi(@)gmail.com"
+  email: "akendzsi(@)gmail.com",
+  cta: "Drop me a message!"
 };

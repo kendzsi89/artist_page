@@ -9,13 +9,18 @@ export default function MenuHovered({ hovered, copied, copyStep }: { hovered: st
 {hovered === "Contact" && (
   <>
     {/* Phone */}
+    <div className={`absolute bottom-115 left-10 text-3xl text-white
+      transition-all duration-500 delay-1000
+      ${hovered === "Contact" ? "opacity-100" : "opacity-0"}`}>
+      {contactInfo.cta}
+    </div>
     <div className="absolute bottom-100 left-10 text-3xl text-white
       opacity-0 animate-[fadeUp_0.5s_forwards_0.2s]">
       {contactInfo.phone}
     </div>
 
     {/* Email */}
-    <div className="absolute bottom-90 left-10 text-3xl text-white
+    <div className="absolute bottom-85 left-10 text-3xl text-white
       opacity-0 animate-[fadeInLeft_0.6s_0.5s_forwards]">
       {contactInfo.email}
     </div>
