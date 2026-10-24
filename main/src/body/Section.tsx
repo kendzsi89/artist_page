@@ -1,79 +1,175 @@
-import ReactPlayer from "react-player";
-import Icon from "../header/Icon";
+import { useEffect, useState, type ReactNode } from "react";
+import type { Quote } from "../data/quotes";
+import type { Video } from "../data/videos";
+import { useReveal } from "../motion/useReveal";
+import VideoPoster from "./VideoPoster";
+
+export const sectionLabelClass =
+  "font-(family-name:--lato) text-[11px] tracking-[0.14em] uppercase text-(--olive) mb-3";
+
+const copyClass =
+  "font-(family-name:--lato) text-base leading-[1.7] text-(--ink-body) lg:text-lg [&_strong]:font-semibold [&_strong]:text-(--walnut)";
+
+type Place = "top-end" | "top-start" | "side-start" | "side-end" | "bottom";
+
+const dropCapClass =
+  "first-letter:float-left first-letter:mr-2 first-letter:font-(family-name:--playfair) first-letter:text-[3.75rem] first-letter:leading-[0.8] first-letter:text-(--highlight)";
 
 export default function Section({
+  label,
+  id,
   video,
   quote,
+  kicker,
   paragraph,
-  rowReverse = false,
+  extraParagraph,
+  place = "top-end",
   firstLetter = true,
   additionalStyles,
-  colReverse = false,
 }: {
-  video?: string;
-  quote?: string;
-  paragraph?: React.ReactNode;
-  rowReverse?: boolean;
-  colReverse?: boolean;
+  label: string;
+  id?: string;
+  video?: Video;
+  quote?: Quote;
+  kicker?: ReactNode;
+  paragraph?: ReactNode;
+  extraParagraph?: ReactNode;
+  place?: Place;
   firstLetter?: boolean;
   additionalStyles?: string;
 }) {
-  return (
-    <div
-      className={`flex flex-col md:flex-col lg:flex-row pt-10 lg:pt-30 items-center justify-center w-4/5 gap-10 lg:gap-20 ${
-        rowReverse ? "lg:flex-row-reverse" : ""
-      }
-      ${colReverse ? "sm:flex-col-reverse md:flex-col-reverse" : ""}`}
-    >
-      {video && (
-        <div className="w-full max-w-[480px]">
-          <ReactPlayer
-            src={video}
-            width="100%"
-            style={{
-              height: "auto",
-              aspectRatio: "16/9",
-              backgroundColor: "#000",
-            }}
-            className="rounded-lg"
-          />
-        </div>
-      )}
+  const { ref, shown } = useReveal<HTMLElement>();
+  const [playing, setPlaying] = useState(false);
 
-      {quote && (
-        <div className="flex flex-row gap-3 items-baseline max-w-[40rem]">
-          <Icon
-            svgStyles="w-10 md:w-12 lg:w-15"
-            path="M96 280C96 213.7 149.7 160 216 160L224 160C241.7 160 256 174.3 256 192C256 209.7 241.7 224 224 224L216 224C185.1 224 160 249.1 160 280L160 288L224 288C259.3 288 288 316.7 288 352L288 416C288 451.3 259.3 480 224 480L160 480C124.7 480 96 451.3 96 416L96 280zM352 280C352 213.7 405.7 160 472 160L480 160C497.7 160 512 174.3 512 192C512 209.7 497.7 224 480 224L472 224C441.1 224 416 249.1 416 280L416 288L480 288C515.3 288 544 316.7 544 352L544 416C544 451.3 515.3 480 480 480L416 480C380.7 480 352 451.3 352 416L352 280z"
-          />
-          <p className="text-[#444] text-lg md:text-xl lg:text-2xl leading-9 max-w-96">
-            {quote}
+  useEffect(() => {
+    if (!playing) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setPlaying(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [playing]);
+  const reveal = shown ? "reveal is-shown" : "reveal";
+  const headingId = id ?? label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const sourcedQuote = quote?.source ? quote : undefined;
+  const plainQuote = quote && !quote.source ? quote.text : undefined;
+  const bodyClass = `${copyClass} ${firstLetter ? dropCapClass : ""}`;
+  const labelInSheet = Boolean(video);
+  const heading = (
+    <h2 id={headingId} className={sectionLabelClass}>
+      {label}
+    </h2>
+  );
+  const boxedTitle = labelInSheet ? (
+    <>
+      {heading}
+      <div className="rule mb-4" />
+    </>
+  ) : null;
+
+  const copy = (
+    <>
+      {kicker}
+      {sourcedQuote?.source && (
+        <blockquote className="sheet w-full max-w-xl">
+          {boxedTitle}
+          {labelInSheet ? null : <div className="rule mb-4" />}
+          <p
+            className="quote-mark font-(family-name:--playfair) text-6xl leading-none text-(--clay)"
+            aria-hidden="true"
+          >
+            “
           </p>
-          <Icon
-            aStyles="self-end"
-            svgStyles="w-10 md:w-12 lg:w-15"
-            path="M544 360C544 426.3 490.3 480 424 480L416 480C398.3 480 384 465.7 384 448C384 430.3 398.3 416 416 416L424 416C454.9 416 480 390.9 480 360L480 352L416 352C380.7 352 352 323.3 352 288L352 224C352 188.7 380.7 160 416 160L480 160C515.3 160 544 188.7 544 224L544 360zM288 360C288 426.3 234.3 480 168 480L160 480C142.3 480 128 465.7 128 448C128 430.3 142.3 416 160 416L168 416C198.9 416 224 390.9 224 360L224 352L160 352C124.7 352 96 323.3 96 288L96 224C96 188.7 124.7 160 160 160L224 160C259.3 160 288 188.7 288 224L288 360z"
-          />
-        </div>
+          <p className="font-(family-name:--playfair) text-2xl leading-[1.45] text-(--ink) italic lg:text-3xl">
+            {sourcedQuote.text}
+          </p>
+          <footer className="mt-4 font-(family-name:--playfair) text-sm text-(--ink-muted)">
+            <cite className="not-italic">
+              — {sourcedQuote.source.name}
+              {sourcedQuote.source.outlet ? ", " : ""}
+              {sourcedQuote.source.outlet && sourcedQuote.source.url ? (
+                <a
+                  href={sourcedQuote.source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-quiet"
+                >
+                  {sourcedQuote.source.outlet}
+                </a>
+              ) : (
+                sourcedQuote.source.outlet
+              )}
+            </cite>
+          </footer>
+        </blockquote>
       )}
+      {plainQuote && <p className={copyClass}>{plainQuote}</p>}
+      {paragraph && video ? (
+        <div className="sheet w-full">
+          {boxedTitle}
+          <p className={bodyClass}>{paragraph}</p>
+          {extraParagraph && (
+            <p className={`${copyClass} mt-5`}>{extraParagraph}</p>
+          )}
+        </div>
+      ) : (
+        <>
+          {paragraph && <p className={bodyClass}>{paragraph}</p>}
+          {extraParagraph && <p className={copyClass}>{extraParagraph}</p>}
+        </>
+      )}
+    </>
+  );
 
-      {paragraph && (
+  if (video) {
+    return (
+      <section ref={ref} aria-labelledby={headingId} className="stage-section">
+        {playing ? (
+          <button
+            type="button"
+            className="stage-scrim"
+            aria-label={`Close video: ${video.title}`}
+            onClick={() => setPlaying(false)}
+          />
+        ) : null}
+        <div className={`stage stage-${place}${playing ? " is-playing" : ""}`}>
+          <div className={`${reveal} stage-mount`}>
+            <VideoPoster
+              video={video}
+              playing={playing}
+              onPlay={() => setPlaying(true)}
+            />
+          </div>
+          <div
+            className={`${reveal} reveal-delay-1 stage-copy`}
+            onClick={playing ? () => setPlaying(false) : undefined}
+          >
+            {labelInSheet ? null : heading}
+            {copy}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      ref={ref}
+      aria-labelledby={headingId}
+      className="flex w-[min(72rem,92vw)] flex-col items-center justify-center gap-10 py-10 lg:flex-row lg:gap-20 lg:py-[5.5rem]"
+    >
+      {(sourcedQuote || plainQuote || paragraph || kicker) && (
         <div
-          className={`flex flex-col gap-5 items-start ${
+          className={`${reveal} flex min-w-0 w-full max-w-[40rem] flex-col items-start gap-5 ${
             additionalStyles || ""
           }`}
         >
-          <p
-            className={`text-[#444] text-base md:text-lg lg:text-xl leading-9 ${
-              firstLetter
-                ? "first-letter:text-(--highlight) first-letter:font-(family-name:--playfair) first-letter:text-6xl"
-                : ""
-            }`}
-          >
-            {paragraph}
-          </p>
+          <h2 id={headingId} className={sectionLabelClass}>
+            {label}
+          </h2>
+          {copy}
         </div>
       )}
-    </div>
+    </section>
   );
 }

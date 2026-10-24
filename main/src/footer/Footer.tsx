@@ -1,36 +1,56 @@
+import { CONTACT } from "../data/contact";
+import { useReveal } from "../motion/useReveal";
+
 export default function Footer() {
+  const { ref, shown } = useReveal<HTMLElement>();
+  const reveal = shown ? "reveal is-shown" : "reveal";
+
   return (
-    <div className="flex relative w-screen h-screen overflow-hidden">
-      {/* Background image */}
-
+    <div className="relative flex h-screen w-screen overflow-hidden">
       <img
-        className="absolute inset-0 w-full h-full object-cover"
-        src="/images/footer.jpeg"
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/images/footer-1920.jpg"
         alt="portrait of Kendzsi"
+        loading="lazy"
+        decoding="async"
+        width={1920}
+        height={1080}
       />
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-black to-transparent opacity-40 z-10" />
+      <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-(--walnut) via-transparent to-transparent opacity-[0.78]" />
+      <div className="vignette-contact pointer-events-none absolute inset-0 z-10" />
 
-      {/* Content Layer */}
-      <div className="relative px-[10%] top-40 z-20 flex flex-col items-start h-full w-full">
-        <h2 className="font-(family-name:--playfair) text-white text-5xl md:text-7xl lg:text-10xl ">
+      <section
+        id="contact"
+        ref={ref}
+        className="relative z-20 flex h-full w-full flex-col items-start px-[8vw] pt-[12vh]"
+      >
+        <h2
+          id="contact-heading"
+          tabIndex={-1}
+          className={`${reveal} font-(family-name:--playfair) text-5xl leading-none text-(--paper-raised) lg:text-7xl`}
+        >
           Contact
         </h2>
-        <div className="relative z-20 flex flex-col items-start w-full mt-30">
-          <h3 className="font-(family-name:--playfair) text-[#0a0505] text-xl md:text-2xl lg:text-3xl">
-            akendzsi (@) gmail.com
-          </h3>
-          <h3 className="font-(family-name:--playfair) text-[#0a0505] text-xl md:text-2xl lg:text-3xl">
-            +455o394351
-          </h3>
-        </div>
-        <div className="relative z-20 flex flex-col items-start w-1/3 mt-30 max-w-100">
-          <h3 className="font-(family-name:--playfair) text-[#0a0505] leading-[1.9em] text-xl md:text-xl lg:text-2xl">
+        <div className={`${reveal} reveal-delay-1 sheet mt-8 max-w-md`}>
+          <a
+            href={`mailto:${CONTACT.email}`}
+            className="link-quiet block font-(family-name:--playfair) text-xl text-(--ink) lg:text-2xl"
+          >
+            {CONTACT.emailDisplay}
+          </a>
+          <a
+            href={`tel:${CONTACT.phoneE164}`}
+            className="link-quiet mt-2 block font-(family-name:--playfair) text-xl text-(--ink) lg:text-2xl"
+          >
+            {CONTACT.phoneDisplay}
+          </a>
+          <div className="rule my-6" />
+          <p className="font-(family-name:--lato) text-lg leading-[1.7] text-(--ink-body)">
             Let's have a chat! I am always open for new projects and
             collaborations.
-          </h3>
+          </p>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
