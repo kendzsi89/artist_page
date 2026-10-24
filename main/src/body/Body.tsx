@@ -129,7 +129,7 @@ export default function Body() {
             <strong> Jun Grooming.</strong> During that period, I learned how to{" "}
             <strong> build websites</strong> and experimented with coding.
             Lastly, I dabble in
-            <strong> woodworking, photography,</strong>
+            <strong> woodworking, photography, </strong>
             and also love <strong>cooking</strong> for my friends.
           </>
         }

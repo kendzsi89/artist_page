@@ -512,12 +512,15 @@ button {
     transform: translate(5rem, 2.5rem);
   }
 
-  .stage.stage-top-end .play-disc,
+ 
   .stage.stage-top-start .play-disc,
   .stage.stage-side-end .play-disc,
   .stage.stage-side-start .play-disc {
     top: calc(50% + 3rem);
   }
+   .stage.stage-top-end .play-disc {
+    top: 50%;
+   }
 
   .stage-side-start .stage-mount,
   .stage-side-end .stage-mount,
