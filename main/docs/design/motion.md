@@ -103,14 +103,14 @@ The hero does not use this hook. Its entrance is a load animation, specified in 
 
 Every looping or long camera animation uses the class `ambient` in addition to its animation class, so this query can stop it. Hover transitions may remain; they are short and tied to a pointer.
 
-Do not set `animation-duration: 0.01ms !important` on `*`. That would also kill the gallery’s `transition-transform` while dragging.
+Do not set `animation-duration: 0.01ms !important` on `*`. The gallery viewer already swaps its slides and view transitions for short fades under reduced motion (see `refactor-gallery.md`); a global override would also break the fades that remain.
 
 ## Scroll listeners
 
-The gallery already fades a fixed black veil from a scroll listener in `Slider.tsx`. Leave that listener. Do not add a second scroll listener for reveals; the observer covers programme, listening room, closing icons, and contact.
+There are no scroll listeners. Do not add one for reveals; the observer covers programme, listening room, closing icons, and contact. The gallery uses a one-shot observer for the touch shuffle and never dims the page on scroll.
 
 ## Done when
 
 - A programme block below the fold is invisible-then-rising as it enters, and stays put when you scroll away and back.
 - With reduced motion emulated, that block is visible immediately, and the hero photograph is still.
-- Dragging the gallery still animates the track for `300ms` (the existing `duration-300` on the track).
+- Opening the gallery grows the top print into the viewer and closing shrinks it back onto the pile; with reduced motion emulated, both are plain fades.

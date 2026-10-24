@@ -119,7 +119,7 @@ export default function Body() {
             Meanwhile, I <strong>teach</strong> a class of a{" "}
             <strong>dozen talented pianists.</strong> They are the future
             generation of music-carriers, so it is of great importance to me to
-            show all the different aspects of playing, listening, and
+            show all the different aspects of playing, listening to, and
             understanding good music.
           </>
         }
@@ -130,7 +130,7 @@ export default function Body() {
             <strong> build websites</strong> and experimented with coding.
             Lastly, I dabble in
             <strong> woodworking, photography, </strong>
-            and also love <strong>cooking</strong> for my friends.
+            and also love <strong>cooking</strong> for my friends. And lastly, I enjoy riding on and wrenching my motorcycles.
           </>
         }
       />

@@ -30,7 +30,7 @@
 
 - [x] 5.1 Add `src/components/ClientOnly.tsx` (renders a sized placeholder until mounted) and wrap `ReactPlayer`, the Spotify embed, and the gallery track in it, preserving box dimensions. Verify the page looks identical before and after mount with no layout jump.
 - [x] 5.2 Add `src/entry-server.tsx` exporting `render()` via `renderToString`, switch `main.tsx` to `hydrateRoot`, and add `scripts/prerender.mjs` that injects the markup into `dist/index.html`. Update `build` to `tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs`. Verify `grep -c "Born in Hungary" dist/index.html` returns 1 and `dist-ssr` is gitignored.
-- [ ] 5.3 Run `npm run preview` with the dev build's hydration warnings visible and load the page. Verify the console shows no hydration mismatch and all interactive parts (gallery drag, embeds) work after hydration.
+- [ ] 5.3 Run `npm run preview` with the dev build's hydration warnings visible and load the page. Verify the console shows no hydration mismatch and all interactive parts (gallery viewer open, swipe, and close, embeds) work after hydration.
 
 ## 6. Integration check
 
